@@ -1,7 +1,10 @@
 {
     "name": "Treemals.Runtime",
     "rootNamespace": "Treemals",
-    "references": [],
+    "references": [
+        "Unity.Netcode.Runtime",
+        "Unity.InputSystem"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
