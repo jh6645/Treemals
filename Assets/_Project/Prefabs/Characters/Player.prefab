@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5266213552646189540}
   - component: {fileID: 1063314462915696599}
   - component: {fileID: 3286520045953521943}
+  - component: {fileID: -5562542488755514516}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -106,7 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 97599167
+  GlobalObjectIdHash: 2565495737
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -169,3 +170,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Treemals.Runtime::Treemals.Characters.PlayerController
   ShowTopMostFoldoutHeaderGroup: 1
   moveSpeed: 5
+--- !u!114 &-5562542488755514516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3734603741750693623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85547e95a0a6f6d41acadaf1d4492d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Treemals.Runtime::Treemals.Characters.PlayerCombat
+  ShowTopMostFoldoutHeaderGroup: 1
+  maxHp: 100
+  attackRadius: 5
+  attackInterval: 1
+  attackDamage: 10
+  projectilePrefab: {fileID: 2698635145354976420, guid: ac4c42c1a66839c4f9b98c0ec86fdb61, type: 3}
+  Hp:
+    m_InternalValue: 0
