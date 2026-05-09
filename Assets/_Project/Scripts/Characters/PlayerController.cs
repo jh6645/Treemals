@@ -11,9 +11,11 @@ namespace Treemals.Characters
 
         public override void OnNetworkSpawn()
         {
+            // DEBUG: green = local, red = remote
+            GetComponent<SpriteRenderer>().color = IsOwner ? Color.green : Color.red;
+
             if (!IsOwner) return;
 
-            // Assign this player as the camera target
             CameraFollow cam = Camera.main?.GetComponent<CameraFollow>();
             if (cam != null) cam.SetTarget(transform);
         }
