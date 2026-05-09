@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using Treemals.Core;
 
 namespace Treemals.Characters
 {
@@ -8,8 +9,9 @@ namespace Treemals.Characters
     // The server drives all movement and combat; NetworkTransform syncs position to clients.
     public class EnemyController : NetworkBehaviour
     {
-        [SerializeField] private float moveSpeed   = 2f;
-        [SerializeField] private int   maxHp       = 30;
+        [SerializeField] private float moveSpeed      = 2f;
+        [SerializeField] private int   maxHp          = 30;
+        [SerializeField] private int   expReward      = 10;
         [SerializeField] private int   contactDamage  = 10;
         [SerializeField] private float contactRadius  = 0.8f;
         [SerializeField] private float damageInterval = 1f;
@@ -77,6 +79,7 @@ namespace Treemals.Characters
             if (Hp.Value <= 0)
             {
                 Debug.Log("[Enemy] Died — despawning.");
+                TeamProgression.Instance?.AddExp(expReward);
                 NetworkObject.Despawn(true);
             }
         }
