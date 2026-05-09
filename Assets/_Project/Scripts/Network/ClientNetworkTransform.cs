@@ -8,5 +8,13 @@ namespace Treemals.Network
     public class ClientNetworkTransform : NetworkTransform
     {
         protected override bool OnIsServerAuthoritative() => false;
+
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+            // Owner moves directly via transform — interpolation would fight local input.
+            // Non-owners still need interpolation to smooth received position updates.
+            Interpolate = !IsOwner;
+        }
     }
 }

@@ -23,7 +23,7 @@ namespace Treemals.Characters
             if (!IsOwner) return;
 
             Vector2 input = ReadMovementInput();
-            transform.Translate(input * moveSpeed * Time.deltaTime);
+            transform.Translate(input * moveSpeed * Time.deltaTime, Space.World);
         }
 
         private Vector2 ReadMovementInput()
