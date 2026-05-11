@@ -7,9 +7,16 @@ namespace Treemals.Core
     // PlayerController calls SetTarget() when the local player spawns.
     public class CameraFollow : MonoBehaviour
     {
+        public static CameraFollow Instance { get; private set; }
+
         private Transform _target;
         private Vector3 _shakeOffset;
         private Coroutine _shakeCoroutine;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         public void SetTarget(Transform target)
         {

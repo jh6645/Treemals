@@ -22,6 +22,7 @@ namespace Treemals.Characters
         public Vector2 FacingDir { get; private set; } = Vector2.down;
 
         private bool isLaunched;
+        private CameraFollow _cameraFollow;
 
         public override void OnNetworkSpawn()
         {
@@ -30,13 +31,23 @@ namespace Treemals.Characters
 
             if (!IsOwner) return;
 
-            CameraFollow cam = Camera.main?.GetComponent<CameraFollow>();
-            if (cam != null) cam.SetTarget(transform);
+            // Game scene may not be loaded yet when host spawns — deferred in Update
+            _cameraFollow = CameraFollow.Instance;
+            _cameraFollow?.SetTarget(transform);
         }
 
         private void Update()
         {
-            if (!IsOwner || isLaunched) return;
+            if (!IsOwner) return;
+
+            // Host spawns before Game scene loads — pick up CameraFollow once it exists
+            if (_cameraFollow == null && CameraFollow.Instance != null)
+            {
+                _cameraFollow = CameraFollow.Instance;
+                _cameraFollow.SetTarget(transform);
+            }
+
+            if (isLaunched) return;
 
             Vector2 input = ReadMovementInput();
             if (input.sqrMagnitude > 0.01f)
@@ -104,8 +115,7 @@ namespace Treemals.Characters
             // Landing impact: exaggerated squash
             visualRoot.localScale = new Vector3(1.7f, 0.4f, 1f);
 
-            CameraFollow cam = Camera.main?.GetComponent<CameraFollow>();
-            cam?.Shake(0.25f, 0.18f);
+            _cameraFollow?.Shake(0.25f, 0.18f);
 
             if (landingFxPrefab != null)
                 Instantiate(landingFxPrefab, transform.position, Quaternion.identity);

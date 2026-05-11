@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Treemals.Runtime::Treemals.Structures.StructureData
   structureName: JumpPadData
   prefab: {fileID: 2898077885703554899, guid: 0300dce596496c84fb2703ecf412c74a, type: 3}
-  placementDistance: 0.1
+  placementDistance: 0.5
