@@ -6,7 +6,7 @@ using Treemals.Core;
 
 namespace Treemals.Characters
 {
-    public class PlayerController : NetworkBehaviour
+    public class PlayerController : NetworkBehaviour, ILaunchable
     {
         [SerializeField] private float moveSpeed = 5f;
 
@@ -22,6 +22,7 @@ namespace Treemals.Characters
         public Vector2 FacingDir { get; private set; } = Vector2.down;
 
         private bool isLaunched;
+        public bool IsBeingLaunched => isLaunched;
         private CameraFollow _cameraFollow;
 
         public override void OnNetworkSpawn()

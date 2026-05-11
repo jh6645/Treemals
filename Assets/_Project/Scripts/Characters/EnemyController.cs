@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace Treemals.Characters
 {
     // Attach to the Enemy prefab alongside NetworkObject and NetworkTransform.
     // The server drives all movement and combat; NetworkTransform syncs position to clients.
-    public class EnemyController : NetworkBehaviour
+    public class EnemyController : NetworkBehaviour, ILaunchable
     {
         [SerializeField] private float moveSpeed      = 2f;
         [SerializeField] private int   maxHp          = 30;
@@ -22,6 +23,8 @@ namespace Treemals.Characters
         public NetworkVariable<int> Hp = new();
 
         private float _damageTimer;
+        private bool isLaunched;
+        public bool IsBeingLaunched => isLaunched;
 
         public override void OnNetworkSpawn()
         {
@@ -37,9 +40,31 @@ namespace Treemals.Characters
         private void Update()
         {
             if (!IsServer) return;
+            if (isLaunched) return;
 
             MoveTowardNearestPlayer();
             TryDamagePlayers();
+        }
+
+        // ILaunchable — server-authoritative; NetworkTransform syncs result to clients
+        public void ApplyLaunch(Vector2 direction, float speed, float duration)
+        {
+            if (!IsServer || isLaunched) return;
+            StartCoroutine(LaunchRoutine(direction.normalized, speed, duration));
+        }
+
+        private IEnumerator LaunchRoutine(Vector2 dir, float speed, float duration)
+        {
+            isLaunched = true;
+            float elapsed = 0f;
+            while (elapsed < duration)
+            {
+                float speedFactor = Mathf.Pow(1f - elapsed / duration, 2f);
+                transform.Translate(dir * speed * speedFactor * Time.deltaTime, Space.World);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            isLaunched = false;
         }
 
         private void MoveTowardNearestPlayer()

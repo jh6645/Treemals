@@ -35,18 +35,18 @@ namespace Treemals.Structures
 
             if (Physics2D.OverlapCircle(spawnPos, overlapCheckRadius, blockingLayers) != null) return;
 
-            PlaceServerRpc(spawnPos, activeIndex);
+            PlaceServerRpc(spawnPos, activeIndex, playerController.FacingDir);
         }
 
         [ServerRpc]
-        private void PlaceServerRpc(Vector3 position, int structureIndex)
+        private void PlaceServerRpc(Vector3 position, int structureIndex, Vector2 facingDir)
         {
             if (structures == null || structureIndex < 0 || structureIndex >= structures.Length) return;
 
             var data = structures[structureIndex];
             var go = Instantiate(data.prefab, position, Quaternion.identity);
             go.GetComponent<NetworkObject>().Spawn(true);
-            go.GetComponent<StructureBehaviour>().ServerInit();
+            go.GetComponent<StructureBehaviour>().ServerInit(facingDir);
         }
     }
 }
