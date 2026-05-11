@@ -10,6 +10,10 @@
 # MemoryCaptures can get very large
 /[Mm]emory[Cc]aptures/
 
+# Unity crash recovery — auto-generated, never intentional project files
+/[Aa]ssets/_Recovery/
+/[Aa]ssets/_Recovery.meta
+
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
 
